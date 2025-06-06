@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 
 import { Grid } from "@chakra-ui/react";
 
-import { AppContext } from "@/providers/AppProvider";
+import { AppContext } from "@/providers";
 
 import { Modal, ModalCloseButton, ModalContent, ModalOverlay } from "../common";
 import Button from "../common/Button";

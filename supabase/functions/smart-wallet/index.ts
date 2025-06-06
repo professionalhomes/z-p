@@ -22,11 +22,13 @@ const supabasekey = Deno.env.get("SUPABASE_ANON_KEY")!;
 
 const supabase = createClient(supabaseUrl, supabasekey);
 
-const rpName = Deno.env.get("RP_NAME")!;
-const rpID = Deno.env.get("RP_ID")!;
-const origin = Deno.env.get("ORIGIN")!;
-
 const secretKey = Deno.env.get("SECRET_KEY")!;
+
+const rpName = "Zi-playground";
+// const rpID = "localhost";
+// const origin = "http://localhost:3000";
+const rpID = "zi-playground-git-dev-to-journeys-projects.vercel.app";
+const origin = "https://zi-playground-git-dev-to-journeys-projects.vercel.app";
 
 function arrayToUint8Array(array: number[]) {
   return new Uint8Array(array);
@@ -49,16 +51,13 @@ Deno.serve((req) =>
     if (req.method === "OPTIONS") return null;
 
     if (req.method === "POST") {
-      const { action, user_id, referrer, challenge_id, data } =
-        await req.json();
+      const { action, user_id, challenge_id, data } = await req.json();
 
       switch (action) {
-        case "profile":
-          return handleProfile(data);
         case "generate-registration-options":
           return handleRegistration();
         case "verify-registration":
-          return handleRegistrationVerification(data, user_id, referrer);
+          return handleRegistrationVerification(data, user_id);
         case "generate-authentication-options":
           return handleAuthentication(challenge_id);
         case "verify-authentication":
@@ -72,20 +71,6 @@ Deno.serve((req) =>
     throw new MethodNotAllowedException();
   })
 );
-
-async function handleProfile(data: any) {
-  const { token } = data;
-  const decoded = jwt.verify(token, secretKey);
-  const { data: user, error } = await supabase
-    .from("users")
-    .select("id, publicKey, email")
-    .eq("user_id", decoded.id)
-    .single();
-  if (error) {
-    throw new Error(error.message);
-  }
-  return user;
-}
 
 // Registration Handler
 async function handleRegistration() {
@@ -110,8 +95,7 @@ async function handleRegistration() {
 // Registration Verification Handler
 async function handleRegistrationVerification(
   assertionResponse: any,
-  user_id: string,
-  referrer: string
+  user_id: string
 ) {
   const { data: challenge } = await supabase
     .from("challenges")
@@ -153,34 +137,6 @@ async function handleRegistrationVerification(
 
     if (error) {
       throw new Error(error.message);
-    }
-
-    if (referrer) {
-      const { data: user, error: userError } = await supabase
-        .from("users")
-        .select("id, referral_count")
-        .eq("publicKey", referrer)
-        .single();
-      if (userError) {
-        throw new Error(userError.message);
-      }
-      const { error: updateError } = await supabase
-        .from("users")
-        .update({
-          referral_count: user.referral_count + 1,
-        })
-        .eq("publicKey", referrer);
-      if (updateError) {
-        throw new Error(updateError.message);
-      }
-      const { error: rewardError } = await supabase.from("rewards").insert({
-        user_id: user.id,
-        type: "invited",
-        amount: 1,
-      });
-      if (rewardError) {
-        throw new Error(rewardError.message);
-      }
     }
 
     const token = generateToken({

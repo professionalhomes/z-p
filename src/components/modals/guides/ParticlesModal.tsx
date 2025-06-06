@@ -1,6 +1,5 @@
 import confetti from "canvas-confetti";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
-import { LuArrowDown } from "react-icons/lu";
 
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useSorobanReact } from "@soroban-react/core";
@@ -20,6 +19,7 @@ import { WalletConnectButton } from "@/components/wallet";
 import { Action } from "@/enums";
 import useAirdrop from "@/hooks/useAirdrop";
 import useWallets from "@/hooks/useWallets";
+import { LuArrowDown } from "react-icons/lu";
 
 const config = {
   zIndex: 1030,
@@ -157,7 +157,7 @@ const ParticlesModal: FC<ModalProps> = ({ isOpen, ...props }) => {
         confetti(config);
       }
     }
-  }, [address, isOpen, step]);
+  }, [address, step]);
 
   useEffect(() => {
     if (status[airdrops[step].action].data) setFinished(true);

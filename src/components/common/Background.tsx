@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { Box } from "@chakra-ui/react";
 
 import { Theme } from "@/enums";
-import { AppContext } from "@/providers/AppProvider";
+import { AppContext } from "@/providers";
 import { useColorModeValue } from "../ui/color-mode";
 import BgAtomic from "./BgAtomic";
 import BgParticles from "./BgParticles";
