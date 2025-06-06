@@ -4,24 +4,47 @@ import { useContext, useState } from "react";
 import { Box, Flex, Image } from "@chakra-ui/react";
 import { useSorobanReact } from "@soroban-react/core";
 
-import { AppContext } from "@/providers";
+import { supabase } from "@/lib/supabase";
+import { AppContext } from "@/providers/AppProvider";
 import { truncateAddress } from "@/utils";
-import { useRouter } from "next/router";
 import Button from "./common/Button";
 import BalanceModal from "./modals/BalanceModal";
 import ConnectWalletModal from "./modals/ConnectWalletModal";
 import ServicesModal from "./modals/ServicesModal";
 import { ColorModeButton, useColorModeValue } from "./ui/color-mode";
 import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "./ui/menu";
+import Link from "next/link";
 
 const Header = () => {
-  const navigate = useRouter();
   const { address, disconnect } = useSorobanReact();
-  const { openAirdropModal, openStakingModal, openLoginModal } =
-    useContext(AppContext);
+  const {
+    user,
+    openAirdropModal,
+    openStakingModal,
+    openRewardsModal,
+    openLoginModal,
+  } = useContext(AppContext);
   const [showBalanceModal, setShowBalanceModal] = useState(false);
   const [showServicesModal, setShowServicesModal] = useState(false);
   const [showConnectWalletModal, setShowConnectWalletModal] = useState(false);
+
+  const handleClickRewards = async () => {
+    if (!address) {
+      setShowConnectWalletModal(true);
+      return;
+    }
+    const { data, error } = await supabase.auth.getUser();
+    if (user?.email || (!error && data.user)) {
+      openRewardsModal?.();
+    } else {
+      openLoginModal?.();
+    }
+  };
+
+  const handleDisconnect = async () => {
+    await supabase.auth.signOut();
+    disconnect();
+  };
 
   return (
     <>
@@ -31,14 +54,15 @@ const Header = () => {
           justify="space-between"
           align="center"
         >
-          <Image
-            width={{ base: "48px", lg: "70px" }}
-            height={{ base: "48px", lg: "70px" }}
-            alt="logo"
-            src="/logo.png"
-            cursor="pointer"
-            onClick={() => navigate.push("/")}
-          />
+          <Link href="/">
+            <Image
+              width={{ base: "48px", lg: "70px" }}
+              height={{ base: "48px", lg: "70px" }}
+              alt="logo"
+              src="/logo.png"
+              cursor="pointer"
+            />
+          </Link>
           <Flex
             position={{ base: "fixed", lg: "static" }}
             left="50%"
@@ -50,7 +74,7 @@ const Header = () => {
           >
             <Button onClick={openAirdropModal}>Airdrop</Button>
             <Button onClick={openStakingModal}>Staking</Button>
-            <Button onClick={openLoginModal}>Rewards</Button>
+            <Button onClick={handleClickRewards}>Rewards</Button>
           </Flex>
           <Flex gap={{ base: "8px", lg: "16px" }} align="center">
             <ColorModeButton
@@ -82,7 +106,7 @@ const Header = () => {
                     <MenuItem
                       p="8px 16px"
                       value="disconnect"
-                      onClick={() => disconnect()}
+                      onClick={handleDisconnect}
                     >
                       Disconnect
                     </MenuItem>
