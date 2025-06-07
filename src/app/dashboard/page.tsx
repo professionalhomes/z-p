@@ -1,7 +1,6 @@
 "use client";
 
 import _ from "lodash";
-import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import {
   Area,
@@ -15,12 +14,10 @@ import {
 import { BarList, BarListData, Chart, useChart } from "@chakra-ui/charts";
 import { Box, Flex } from "@chakra-ui/react";
 
-import { CloseButton } from "@/components/ui/close-button";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import useRewards from "@/hooks/useRewards";
 
 export default function PlaygroundPage() {
-  const router = useRouter();
   const { rewards } = useRewards();
 
   const rewardsHistory = useMemo(() => {
@@ -42,12 +39,8 @@ export default function PlaygroundPage() {
     for (const key in groupedHistory) {
       const monthHistory = groupedHistory[key];
 
-      const invited = monthHistory
-        .filter(({ type }) => type == "invited")
-        .reduce((acc, item) => acc + item.amount, 0);
-      const claimed = monthHistory
-        .filter(({ type }) => type == "claimed")
-        .reduce((acc, item) => acc + item.amount, 0);
+      const invited = monthHistory.filter(({ type }) => type == "invited").reduce((acc, item) => acc + item.amount, 0);
+      const claimed = monthHistory.filter(({ type }) => type == "claimed").reduce((acc, item) => acc + item.amount, 0);
       const earned = invited * 10 + Math.floor(invited / 10) * 100;
       const remaining = earned - claimed;
 
@@ -89,36 +82,41 @@ export default function PlaygroundPage() {
   const borderColor = useColorModeValue("gray.100", "gray.700");
 
   return (
-    <Box zIndex={1} px={4} py={12}>
-      <Flex
-        position="relative"
-        px={6}
-        py={12}
-        direction={{ base: "column", md: "row" }}
-        gap={4}
+    <Flex
+      zIndex={1}
+      flex="1 1 0"
+      px={4}
+      py={12}
+      direction={{ base: "column", md: "row" }}
+      align={{ md: "start" }}
+      gap={4}
+      overflowY="auto"
+    >
+      <Box
+        w="100%"
+        maxW="480px"
+        p={4}
         bg={bgColor}
         rounded="lg"
         borderWidth="1px"
         borderColor={borderColor}
       >
-        <CloseButton
-          position="absolute"
-          top={2}
-          right={2}
-          onClick={() => router.push("/")}
-        />
-        <BarList.Root
-          w="100%"
-          maxW="480px"
-          chart={barListData}
-          color={textColor}
-        >
+        <BarList.Root chart={barListData} color={textColor}>
           <BarList.Content>
             <BarList.Bar />
             <BarList.Value />
           </BarList.Content>
         </BarList.Root>
-        <Chart.Root flexGrow={{ md: 1 }} maxH="sm" chart={chart}>
+      </Box>
+      <Box
+        flexGrow={{ md: 1 }}
+        p={4}
+        bg={bgColor}
+        rounded="lg"
+        borderWidth="1px"
+        borderColor={borderColor}
+      >
+        <Chart.Root maxH="sm" chart={chart}>
           <AreaChart data={chart.data}>
             <CartesianGrid
               stroke={chart.color("border.muted")}
@@ -148,7 +146,7 @@ export default function PlaygroundPage() {
             ))}
           </AreaChart>
         </Chart.Root>
-      </Flex>
-    </Box>
+      </Box>
+    </Flex>
   );
 }

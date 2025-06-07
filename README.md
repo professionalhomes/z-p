@@ -1,110 +1,36 @@
-<div align="center">
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# 🚀 Zig3 V3, Stellar, Soroban, Airdrop, Classic Referrel, Staking Next.js 14 Referrel Web Template
+## Getting Started
 
-[![Stellar.org](https://cdn.sanity.io/images/e2r40yh6/production-i18n/0a68a5dca134b65df72fd765865b65af68233e64-3104x1072.png?w=1440&auto=format&dpr=2)](https://stellar.org/)
-[![Zioncoin.org.uk](https://zioncoin.org.uk/wp-content/uploads/2023/12/Zi_Zioncoin_Ticker.png)](hhttps://zioncoin.org.uk/)
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/) 
-[![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![NextAuth.js](https://img.shields.io/badge/NextAuth.js-black?style=for-the-badge&logo=nextauth&logoColor=white)](https://next-auth.js.org/)
-[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
-[![Tremor](https://img.shields.io/badge/Tremor-FD0061?style=for-the-badge)](https://www.tremor.so)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+First, run the development server:
 
-**Stellar, Zig3 v3 Airdrop dapp, Next.js 14** web Rewards magic link referral system (inspired by Slack 😎, Notion 📝, and Figma 🎨) built with **Next Auth** and **Soroban**. Styled with **Tremor** components and  **Tailwind CSS**.
-
-</div>
-
-## 🚩 Overview  
-
-
-
-
-
-The merged project, **Zi Airdrop Playground**, is a decentralized application (dApp) built with **Next.js 14**, combining features for secure airdrop management with a referral system inspired by modern platforms like Slack, Notion, and Figma. It leverages blockchain technology, WebAuthn for authentication, and a magic link referral system. The project is developer-friendly, responsive, and optimized for deployment on **Vercel**.
-
-#### Key Features
-1. **Airdrop Management**: Distribute digital assets to multiple recipients via blockchain smart contracts, through theme changes and classic games.
-2. **Referral System**: Magic link-based referrals powered by **NextAuth.js** and **Firebase (Now Soroban Contact)**, inspired by collaborative platforms.
-3. **WebAuthn Authentication**: Stellar's passkey protocol leverages the secp256r1 verification curve, Protocol 21, to enable passkey-powered smart wallets, no dapp to download, no passwords required.
-4. **Responsive Design**: Optimized for desktop and mobile using **Tailwind CSS** and **Tremor** components.
-5. **Blockchain Integration**: Stellar Soroban Smart contract interactions for secure asset transfers, atomic swaps, liquidity pools, sending and receiving .
-6. **Analytics**: Integrated **Vercel Analytics** for tracking usage.
-7. **Classic Gamez **: Zig3 v3 Airdrop play ground interoduces classic games like **space invades**, and **tertis** where the user is paid to play.
-
-#### Tech Stack
-1. **Frontend**: Next.js 14 (React, TypeScript, server-side rendering)
-2. **Backend**: Supabase (serverless functions, database), Stellar Soroban smart contracts (referral system)
-3. **Authentication**: WebAuthn (passkeys), NextAuth.js (with Firebase adapter)
-4. **Styling**: Tailwind CSS, Tremor components
-5. **Blockchain**: Stellar Soroban Smart contracts for Sending, recieving, airdroping, swapping, liquidity pools, minting and staking. 
-6. **Deployment**: Vercel (serverless, preview mode, cache invalidation)
-7. **Tools**: ESLint, Prettier, Vercel Analytics
-
-#### License
-- **MIT License** for both original repositories, ensuring open-source contributions are welcome.
-
----
-
-### Getting Started
-
-#### First, run the development server:
-```
+```bash
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
 # or
-bun dev 
+bun dev
 ```
 
-#### **Configure Environment Variables**:
-   - Copy `.env.local.example` to `.env.local`.
-   - Add credentials for:
-     - **Soroban** (for referral system and NextAuth.js adapter)
-     - **Supabase** (for serverless functions and database)
-     - **SendGrid** (for email-based magic links)
-     - Blockchain-related keys (e.g., wallet or contract addresses)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-#### **Run Development Server**:
-   ```bash
-   pnpm dev
-   ```
-   - Open [http://localhost:3000](http://localhost:3000) to view the app.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-#### **Edit and Develop**:
-   - Modify `app/page.tsx` for frontend changes (auto-updates in development).
-   - Customize smart contracts or backend logic as needed.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
----
+## Learn More
 
-### Deployment
-- **Vercel** is the recommended platform for deployment:
-  1. Push the repository to a Git provider (e.g., GitHub).
-  2. Import the project into Vercel.
-  3. Configure environment variables in Vercel’s dashboard.
-  4. Deploy with automatic scaling, preview mode, and serverless functions.
-- Refer to [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for details.
+To learn more about Next.js, take a look at the following resources:
 
-### Additional Resources
-- **Next.js**: [Docs](https://nextjs.org/docs) | [Tutorial](https://nextjs.org/learn) | [GitHub](https://github.com/vercel/next.js)
-- **Supabase**: [Docs](https://supabase.com/docs)
-- **WebAuthn**: [Guide](https://webauthn.guide)
-- **Passkeys**: [Docs](https://developers.stellar.org/docs/build/apps/guestbook/setup-passkeys)
-- **Soroban**: [Docs](https://developers.stellar.org/docs/build/smart-contracts/overview)
-- **Tailwind CSS**: [Docs](https://tailwindcss.com/docs)
-- **Tremor**: [Docs](https://www.tremor.so/docs/getting-started/installation)
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
----
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-### Contributing
-- Fork the repository, make changes, and submit a pull request.
-- Ensure code adheres to **ESLint** and **Prettier** standards.
-Contributions are welcome! If you'd like to contribute, please fork the repository and submit a pull request.
+## Deploy on Vercel
 
-## License
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
